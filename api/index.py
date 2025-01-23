@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "pandas",
+# ]
+# ///
 # api/index.py
 import json
 from http.server import BaseHTTPRequestHandler
