@@ -19,6 +19,10 @@ app.add_middleware(
 
 data = pd.read_json("q-vercel-python.json")
 
+@app.get("/")
+async def root():
+    return "Hello Guys!!!!!"
+
 @app.get("/api", response_model=Output)
 async def get_marks(name: List[str] = Query(...)):
     result = []
