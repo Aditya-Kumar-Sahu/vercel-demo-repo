@@ -28,7 +28,12 @@ async def get_marks(name: List[str] = Query(...)):
     result = []
     for n in name:
         try:
-            result.append(data.loc[data['name']==n]['marks'].iloc[0])
+            result.append(int(data.loc[data['name']==n]['marks'].iloc[0]))
         except IndexError:
             pass
     return {"marks": result}
+
+
+if __name__ == '__main__':
+    import uvicorn as uv
+    uv.run(app=app)
