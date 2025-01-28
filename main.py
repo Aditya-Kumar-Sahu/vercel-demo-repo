@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List
 import pandas as pd
 
 class Marks(BaseModel):
@@ -49,15 +49,8 @@ async def get_marks(name: List[str] = Query(...)) -> Marks:
 
 
 @app.get("/api/v2", response_model=Students)
-async def get_students(class_: Optional[List[str]] = Query(None)) -> Students:
-    if class_:
-        # Filter by class if provided
-        filtered_data = data2[data2["class"].isin(class_)]
-    else:
-        # Return all students if no class filter
-        filtered_data = data2
-
-    # Convert to JSON-compatible response
+async def get_students(class_: List[str] = Query(...)) -> Students:
+    filtered_data = data2[data2["class"].isin(class_)]
     records = filtered_data.rename(columns={"class": "class_"}).to_dict(orient="records")
     return Students(students=records)
 
