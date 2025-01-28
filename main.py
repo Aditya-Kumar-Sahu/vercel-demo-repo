@@ -37,7 +37,7 @@ data2 = pd.read_csv("q-fastapi.csv")
 async def root() -> str:
     return "Hello Guys!!!!!"
 
-@app.get("/v1/api", response_model=Marks)
+@app.get("/api/v1", response_model=Marks)
 async def get_marks(name: List[str] = Query(...)) -> Marks:
     result : List[int] = []
     for n in name:
@@ -48,7 +48,7 @@ async def get_marks(name: List[str] = Query(...)) -> Marks:
     return Marks(marks=result)
 
 
-@app.get("/v2/api", response_model=Students)
+@app.get("/api/v2", response_model=Students)
 async def get_students(class_: Optional[List[str]] = Query(None)) -> Students:
     if class_:
         # Filter by class if provided
