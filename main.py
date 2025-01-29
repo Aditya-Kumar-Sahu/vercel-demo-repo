@@ -49,7 +49,7 @@ async def get_marks(name: List[str] = Query(...)) -> Marks:
 
 
 @app.get("/api/v2", response_model=Students)
-async def get_students(class_: Optional[List[str]] = Query(None)) -> Students:
+async def get_students(class_: Optional[List[str]] = Query(None, alias="class")) -> Students:
     if class_:
         # Filter by class if provided
         filtered_data = data2[data2["class"].isin(class_)]
@@ -57,8 +57,7 @@ async def get_students(class_: Optional[List[str]] = Query(None)) -> Students:
         # Return all students if no class filter
         filtered_data = data2
 
-    # Convert to JSON-compatible response
-    records = filtered_data.rename(columns={"class": "class_"}).to_dict(orient="records")
+    records = filtered_data.to_dict(orient="records")
     return Students(students=records)
 
 
